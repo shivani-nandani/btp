@@ -1,0 +1,10 @@
+- https://paperswithcode.com/task/object-detection
+- https://paperswithcode.com/paper/context-aware-cnns-for-person-head-detection
+- https://paperswithcode.com/paper/detect-and-track-efficient-pose-estimation-in
+- https://paperswithcode.com/paper/self-supervised-human-detection-and
+- https://paperswithcode.com/paper/person-minkunet-3d-person-detection-with
+- https://paperswithcode.com/sota/object-detection-on-crowdhuman-full-body
+- https://paperswithcode.com/paper/multi-scale-feature-pyramid-network-a-heavily
+- https://paperswithcode.com/paper/crowdhuman-a-benchmark-for-detecting-human-in
+- https://paperswithcode.com/paper/beta-r-cnn-looking-into-pedestrian-detection
+- https://github.com/PaddlePaddle/PaddleDetection
