@@ -8,3 +8,4 @@
 - https://paperswithcode.com/paper/crowdhuman-a-benchmark-for-detecting-human-in
 - https://paperswithcode.com/paper/beta-r-cnn-looking-into-pedestrian-detection
 - https://github.com/PaddlePaddle/PaddleDetection
+- https://github.com/visionml/pytracking
