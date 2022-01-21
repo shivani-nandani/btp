@@ -11,3 +11,4 @@
 - https://github.com/visionml/pytracking
 - https://medium.com/@cindy.trinh.sridykhan/a-tour-of-video-object-tracking-part-ii-single-object-tracking-708261304ea7
 - https://learnopencv.com/object-tracking-using-opencv-cpp-python/
+- https://prints.vicos.si/publications/400
