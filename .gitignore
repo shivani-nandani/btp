@@ -127,3 +127,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+yolov5x.pt
+frames/
+deep-person-reid/
+street_reid_video.avi
+yolov5/
+runs/
+cropped_persons/
+detected.avi
+reid.avi
+detection_results.csv
+reid.csv
+street.mp4
