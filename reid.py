@@ -18,7 +18,7 @@ def torchreidReid(SIMILARITY_THRESH, PATH_TO_DATA, PATH_TO_OUTPUT='.', FRAME_LIM
         FRAME_LIM (int, optional): for testing purposes change this to number of frames you want to proces. Defaults to 0.
 
     """
-    
+
     # model to be used to extract features
     extractor = FeatureExtractor(
         model_name='osnet_x1_0',
@@ -27,12 +27,12 @@ def torchreidReid(SIMILARITY_THRESH, PATH_TO_DATA, PATH_TO_OUTPUT='.', FRAME_LIM
     )
 
     # cosine similarity function
-    cos = nn.CosineSimilarity(dim=1,eps=1e-6)
+    cos = nn.CosineSimilarity(dim=1, eps=1e-6)
 
     # file name format: 'frame<frame#>_<objID>.jpg'
     def split_name(filename):
         x = filename.split("_")
-        return x[0].replace('frame',''), x[1].replace('.jpg','')
+        return x[0].replace('frame', ''), x[1].replace('.jpg', '')
 
     filenames = []
     # sort the files in the order of frames
@@ -40,7 +40,7 @@ def torchreidReid(SIMILARITY_THRESH, PATH_TO_DATA, PATH_TO_OUTPUT='.', FRAME_LIM
         frame_no, obj_id = split_name(filename)
         num = int(frame_no + obj_id)
         filenames.append([filename, num])
-    filenames.sort(key = lambda x: x[1])
+    filenames.sort(key=lambda x: x[1])
 
     # dict format: {frame# : ['frame<frame#>_0.jpg', 'frame<frame#>_1.jpg', ...]}
     frame_dict = {}
@@ -70,12 +70,14 @@ def torchreidReid(SIMILARITY_THRESH, PATH_TO_DATA, PATH_TO_OUTPUT='.', FRAME_LIM
             # all objects will be new
             for obj in obj_lst:
                 obj.append(obj_id)
-                obj_id+=1
+                obj_id += 1
         else:
             # compare frame features with previous frame features
             frame_features = [obj[1][0].cpu().numpy() for obj in obj_lst]
-            prev_frame_features = [prev_obj[1][0].cpu().numpy() for prev_obj in frames[frame_no-1]]
-            cos_sim = sklearn.metrics.pairwise.cosine_similarity(prev_frame_features,frame_features)
+            prev_frame_features = [prev_obj[1][0].cpu().numpy()
+                                   for prev_obj in frames[frame_no-1]]
+            cos_sim = sklearn.metrics.pairwise.cosine_similarity(
+                prev_frame_features, frame_features)
 
             # rank
             for col in range(len(cos_sim[0])):
@@ -86,19 +88,19 @@ def torchreidReid(SIMILARITY_THRESH, PATH_TO_DATA, PATH_TO_OUTPUT='.', FRAME_LIM
                 # check the next max of col with those of its row
                 for index in sorted_indices:
                     if scores_for_obj[index] > SIMILARITY_THRESH:
-                        flag=1
+                        flag = 1
                         for check_col in range(len(cos_sim[0])):
                             if check_col != col:
                                 if scores_for_obj[index] < cos_sim[index][check_col]:
                                     # not the max for the row therefore cannot assign this object id, move on to next element
-                                    flag=0
+                                    flag = 0
                         if flag:
                             # the max for the row, therefore assign that object id
                             obj_lst[col].append(frames[frame_no-1][index][2])
                 # checked all valid elemenets and none suitable found, therefore assign a new id
-                if len(obj_lst[col])==2:
+                if len(obj_lst[col]) == 2:
                     obj_lst[col].append(obj_id)
-                    obj_id+=1
+                    obj_id += 1
         frames[frame_no] = obj_lst
 
     # dict_file = open('street/outputs/pkl/street_ReID.pkl', 'wb')
@@ -108,7 +110,7 @@ def torchreidReid(SIMILARITY_THRESH, PATH_TO_DATA, PATH_TO_OUTPUT='.', FRAME_LIM
     reid = []
     for frame, obj_lst in frames.items():
         for obj in obj_lst:
-            reid.append([frame,obj[0],obj[2]])
+            reid.append([frame, obj[0], obj[2]])
 
-    reid_df = pd.DataFrame(reid,columns=['frame#','filename','id'])
+    reid_df = pd.DataFrame(reid, columns=['frame#', 'filename', 'id'])
     reid_df.to_csv(PATH_TO_OUTPUT + '/reid.csv')

@@ -6,6 +6,7 @@ import shutil
 
 from os.path import isfile, join
 
+
 def videoToFrames(input_path):
     """Converts video to frames from the given path
 
@@ -37,6 +38,7 @@ def videoToFrames(input_path):
 
     return output_path
 
+
 def framesToVideo(fps, input_path=None, output_path=None):
     """Converts frames to video (avi format only)
 
@@ -51,34 +53,38 @@ def framesToVideo(fps, input_path=None, output_path=None):
 
     if input_path != None:
         input_path = input_path + '/'
-        files = [f for f in os.listdir(input_path) if isfile(join(input_path, f))]
+        files = [f for f in os.listdir(
+            input_path) if isfile(join(input_path, f))]
 
         # for sorting the file names properly
-        files.sort(key = lambda x: int(x[5:-4]))
+        files.sort(key=lambda x: int(x[5:-4]))
         # print(files)
-        
-        filenames=[input_path + files[i] for i in range(len(files))]
-   
+
+        filenames = [input_path + files[i] for i in range(len(files))]
+
     else:
-        filenames = ['./runs/detect/'+subd+'/'+str(os.listdir('./runs/detect/'+subd)[0]) for subd in os.listdir('./runs/detect')]
+        filenames = ['./runs/detect/'+subd+'/'+str(os.listdir('./runs/detect/'+subd)[
+                                                   0]) for subd in os.listdir('./runs/detect')]
         filenames.sort(key=lambda x: int(x.split('/')[-1][5:-4]))
 
     frame_array = []
 
     for filename in filenames:
-        #reading each files
+        # reading each files
         img = cv2.imread(filename)
         height, width, layers = img.shape
-        size = (width,height)
+        size = (width, height)
         # print(filename)
-        
-        #inserting the frames into an image array
+
+        # inserting the frames into an image array
         frame_array.append(img)
 
-    if output_path!=None:
-        out = cv2.VideoWriter(output_path,cv2.VideoWriter_fourcc(*'DIVX'), fps, size)
+    if output_path != None:
+        out = cv2.VideoWriter(
+            output_path, cv2.VideoWriter_fourcc(*'DIVX'), fps, size)
     else:
-        out = cv2.VideoWriter('detected.avi',cv2.VideoWriter_fourcc(*'DIVX'), fps, size)
+        out = cv2.VideoWriter(
+            'detected.avi', cv2.VideoWriter_fourcc(*'DIVX'), fps, size)
 
     for i in range(len(frame_array)):
         # writing to a image array
