@@ -131,6 +131,7 @@ dmypy.json
 yolov5x.pt
 frames/
 deep-person-reid/
+centroids_reid/
 street_reid_video.avi
 yolov5/
 runs/
@@ -139,4 +140,14 @@ detected.avi
 reid.avi
 detection_results.csv
 reid.csv
+mot20data/
+mot16data/
+mot15data/
+mot17data/
 street.mp4
+reid_centroids.csv
+model_weights/
+output_dir/
+reid_centroids.avi
+reid_torchreid.csv
+reid_torchreid.avi

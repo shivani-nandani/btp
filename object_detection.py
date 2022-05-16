@@ -18,9 +18,8 @@ def loadModel(model_version):
     """
 
     # model
-    # , force_reload=True)
     model = torch.hub.load('ultralytics/yolov5',
-                           str(model_version), pretrained=True)
+                           str(model_version), pretrained=True, force_reload=True, _verbose=False)
 
     # setting device on GPU if available, else CPU
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -76,7 +75,7 @@ def objectDetection(model_version, frames_input_path, detection_results_path, to
         frame_obj_i_end = frame_obj_i_start + len(results.pandas().xyxy[0])
         detection_results.loc[frame_obj_i_start:frame_obj_i_end, 'frame'] = i
 
-    detection_results.to_csv(detection_results_path)
+    detection_results.to_csv(detection_results_path, index=False)
 
 
 def cropPersons(detection_results_path, image_directory_path, cropped_image_output_path, confidence_threshold):
