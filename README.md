@@ -1,2 +1,1 @@
-# btp
-btp 
+Refer to ReID.pdf
